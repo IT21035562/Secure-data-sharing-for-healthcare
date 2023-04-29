@@ -3,7 +3,7 @@ let User = require("../modals/medspring");
 const bcrypt = require('bcrypt');
 
 router.route("/add").post(async(req,res) => {
-
+    // console.log("user adding request");
     const user_id = req.body.user_id;
     const user_name = req.body.user_name;
     const email_address = req.body.email_address;
@@ -12,6 +12,7 @@ router.route("/add").post(async(req,res) => {
 
     //encrypt the password
     const password = await bcrypt.hash(req.body.password, 10);
+    // const password = "wfegwehrsfb";
 
 
     //create new User 
@@ -21,7 +22,8 @@ router.route("/add").post(async(req,res) => {
         email_address,
         type,
         nic,
-        password
+        password 
+         
         
     })
 
@@ -36,8 +38,8 @@ router.route("/add").post(async(req,res) => {
 
 router.route("/update/:userId").put(async(req,res)=>{
     let userId = req.params.userId;
-    //get existing values from the database
-    const {user_id, user_name, email_address, type, nic, password} = req.body;
+        //get existing values from the database
+        const {user_id, user_name, email_address, type, nic, password} = req.body;
 
     //get new user values
     const updateUser = {
@@ -74,7 +76,7 @@ router.route("/delete/:id").delete(async (req,res) =>{
 router.route("/get/:user_id").get(async (req,res) => {
     let user_id = req.params.user_id;
     
-    const user = await User.findById(user_id)
+    const user = await User.findOne({user_id:user_id})
     .then((user) => {
         res.json(user);
     })
