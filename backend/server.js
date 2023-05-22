@@ -41,7 +41,7 @@ connection.once("open", () => {
 //to access the user.js route file
 const UserRouter = require("./routes/User.js")
 app.use("/User",UserRouter);
-
+ 
 const forgotPW = require("./routes/forgotPw.js")
 app.use("/forgotPW",forgotPW);
 
