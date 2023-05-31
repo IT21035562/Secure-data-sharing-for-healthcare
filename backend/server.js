@@ -41,6 +41,9 @@ connection.once("open", () => {
 //to access the user.js route file
 const UserRouter = require("./routes/User.js")
 app.use("/User",UserRouter);
+
+const medRouter = require("./routes/Medspring2.js")
+app.use("/med",medRouter);
  
 const forgotPW = require("./routes/forgotPw.js")
 app.use("/forgotPW",forgotPW);
