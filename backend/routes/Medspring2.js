@@ -1,7 +1,10 @@
 
 const router = require("express").Router();
 let record = require("../modals/medrec");
+const bcrypt = require('bcrypt');
 // POST endpoint
+
+//const password = await bcrypt.hash(req.body.password, 10);
 
 router.route("/api/addmedrecord").post(async(req,res) => {
   const Blood_Type = req.body.Blood_Type;
@@ -36,7 +39,18 @@ router.route("/api/addmedrecord").post(async(req,res) => {
         Dental_Health
          
         
-    })
+    });
+    const medrecords = `${Blood_Type}-${BP_Level}-${DM_Level}-${Cholesterol_Level}-${Heart_Rate}-${BMI}-${Allergies}-${Immunization_History}-${Medications}-${Medical_Procedures}-${Family_Medical_History}-${Vision_and_EyeHealth}-${Dental_Health}`;
+    newrecord.medrecords = medrecords;
+    
+    //convert medrecords in to a hash
+    const salt = await bcrypt.genSalt(10);
+    newrecord.medrecords = await bcrypt.hash(newrecord.medrecords, salt);
+    console.log(newrecord.medrecords);
+
+
+
+
 
     //save user
     newrecord.save().then(()=>{
